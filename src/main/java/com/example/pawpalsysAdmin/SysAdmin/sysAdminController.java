@@ -26,22 +26,15 @@ public class sysAdminController {
     @Autowired
     private ReviewRepository reviewRepository;
 
-
-    @Autowired
-    public sysAdminController(UserRepository userRepository, PetServiceRepository petServiceRepository, ReviewRepository reviewRepository) {
-        this.userRepository = userRepository;
-        this.petServiceRepository = petServiceRepository;
-        this.reviewRepository = reviewRepository;
-    }
-    // Dashboard
-    /*
-    http://localhost:8081/admin/dashboard
-     */
-
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
-
         return "dashboard";
+    }
+
+    @GetMapping("/moderate-services")
+    public String moderateServices(Model model) {
+        model.addAttribute("services", petServiceRepository.findAll());
+        return "moderate-services";
     }
 
     // List unapproved services
@@ -63,7 +56,7 @@ public class sysAdminController {
             service.setApproved(true);
             petServiceRepository.save(service);
         }
-        return "moderate-services";
+        return "redirect:/admin/services/pending";
     }
 
     // Delete service
@@ -92,7 +85,6 @@ public class sysAdminController {
     @GetMapping("/users")
     public String manageUsers(Model model) {
         model.addAttribute("users", userRepository.findAll());
-
         return "manage-users";
     }
 
@@ -102,25 +94,25 @@ public class sysAdminController {
         return "redirect:/admin/users";
     }
 
+    // View statistics
     @GetMapping("/stats")
     public String viewStats(Model model) {
-        // Query for active users per month (adjust this to your actual data retrieval method)
-        int activeUsersJan = userRepository.countByActiveAndMonth(1); // For January
-        int activeUsersFeb = userRepository.countByActiveAndMonth(2); // For February
-        int activeUsersMar = userRepository.countByActiveAndMonth(3); // For March
-        int activeUsersApr = userRepository.countByActiveAndMonth(4); // For April
+        // Active user counts per month (update according to your actual method of counting)
+        int activeUsersJan = userRepository.countByActiveAndMonth(1); // January
+        int activeUsersFeb = userRepository.countByActiveAndMonth(2); // February
+        int activeUsersMar = userRepository.countByActiveAndMonth(3); // March
+        int activeUsersApr = userRepository.countByActiveAndMonth(4); // April
 
-        // Add the data to the model to be used in the frontend
         model.addAttribute("activeUsersJan", activeUsersJan);
         model.addAttribute("activeUsersFeb", activeUsersFeb);
         model.addAttribute("activeUsersMar", activeUsersMar);
         model.addAttribute("activeUsersApr", activeUsersApr);
 
-        // You can also add overall average rating if applicable
-        double overallAvg = reviewRepository.getAverageRating(); // Assuming you have such a method
+        // Average rating (assuming the method exists)
+        double overallAvg = reviewRepository.getAverageRating();
         model.addAttribute("overallAvg", overallAvg);
 
-        return "moderate-stats"; // This should correspond to your `stats.ftlh` template
+        return "moderate-stats";
     }
 
 }

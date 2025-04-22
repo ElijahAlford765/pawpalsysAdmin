@@ -1,19 +1,19 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${title}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-
 <div class="container mt-4">
     <div class="row mb-3">
         <div class="col d-flex justify-content-between align-items-center">
             <h2>Statistics</h2>
-            <a href="/admin-dashboard.ftlh" class="btn btn-primary">Back to Dashboard</a>
+            <a href="/admin/dashboard" class="btn btn-primary">Back to Dashboard</a>
         </div>
     </div>
 
@@ -47,60 +47,57 @@
 </div>
 </#if>
 
-<!-- Active User Accounts Chart -->
+<!-- Chart: Active Users Overview -->
+<#if activeUsersJan?? && activeUsersFeb?? && activeUsersMar?? && activeUsersApr??>
 <div class="card mt-4 p-3 shadow-sm">
     <h6>Active User Accounts - Monthly Overview</h6>
     <canvas id="activeUserChart" width="400" height="150"></canvas>
 </div>
 
-<#if activeUsersJan?? && activeUsersFeb?? && activeUsersMar?? && activeUsersApr??>
-<div class="row">
+<div class="row mt-4">
     <div class="col-md-6">
         <h6>Active Users Per Month</h6>
         <canvas id="userStatsChart" width="400" height="150"></canvas>
     </div>
 </div>
 </#if>
-
 </div>
 
 <script>
-    // Active User Accounts Chart (for active users per month)
     const ctx = document.getElementById('activeUserChart').getContext('2d');
     new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr'], // Labels for each month
-        datasets: [{
-          label: 'Active User Accounts',
-          data: [${activeUsersJan}, ${activeUsersFeb}, ${activeUsersMar}, ${activeUsersApr}], // Dynamic data from the controller
-          borderColor: 'green',
-          backgroundColor: 'rgba(0, 128, 0, 0.1)',
-          fill: true
-        }]
-      },
-      options: {
-        responsive: true
-      }
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr'],
+            datasets: [{
+                label: 'Active User Accounts',
+                data: [${activeUsersJan}, ${activeUsersFeb}, ${activeUsersMar}, ${activeUsersApr}],
+                borderColor: 'green',
+                backgroundColor: 'rgba(0, 128, 0, 0.1)',
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true
+        }
     });
 
-    // User Stats Chart (active users per month)
     const userStatsCtx = document.getElementById('userStatsChart').getContext('2d');
     new Chart(userStatsCtx, {
-      type: 'line',
-      data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr'], // Labels representing months
-        datasets: [{
-          label: 'Active Users',
-          data: [${activeUsersJan}, ${activeUsersFeb}, ${activeUsersMar}, ${activeUsersApr}], // Dynamic data passed from backend
-          borderColor: 'rgba(0, 123, 255, 1)',
-          backgroundColor: 'rgba(0, 123, 255, 0.1)', // Semi-transparent background
-          fill: true
-        }]
-      },
-      options: {
-        responsive: true
-      }
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr'],
+            datasets: [{
+                label: 'Active Users',
+                data: [${activeUsersJan}, ${activeUsersFeb}, ${activeUsersMar}, ${activeUsersApr}],
+                borderColor: 'rgba(0, 123, 255, 1)',
+                backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true
+        }
     });
 </script>
 
