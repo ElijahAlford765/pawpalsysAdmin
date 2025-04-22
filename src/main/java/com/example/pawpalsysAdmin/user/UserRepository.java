@@ -31,6 +31,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     // Find all users with a specific combination of status and role
     List<User> findByStatusAndRole(String status, String role);
 
-
+    @Query("SELECT COUNT(u) FROM User u WHERE u.active = true AND MONTH(u.createdAt) = :month")
+    int countByActiveAndMonth(@Param("month") int month);
 
 }

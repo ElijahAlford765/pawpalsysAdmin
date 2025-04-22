@@ -53,26 +53,54 @@
     <canvas id="activeUserChart" width="400" height="150"></canvas>
 </div>
 
+<#if activeUsersJan?? && activeUsersFeb?? && activeUsersMar?? && activeUsersApr??>
+<div class="row">
+    <div class="col-md-6">
+        <h6>Active Users Per Month</h6>
+        <canvas id="userStatsChart" width="400" height="150"></canvas>
+    </div>
+</div>
+</#if>
+
 </div>
 
 <script>
-    // Data for the active user accounts chart
+    // Active User Accounts Chart (for active users per month)
     const ctx = document.getElementById('activeUserChart').getContext('2d');
     new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr'], // Labels representing months
-            datasets: [{
-                label: 'Active User Accounts',
-                data: [${activeUsersJan}, ${activeUsersFeb}, ${activeUsersMar}, ${activeUsersApr}], // Dynamic data passed from backend
-                borderColor: 'green',
-                backgroundColor: 'rgba(0, 128, 0, 0.1)', // Semi-transparent background
-                fill: true
-            }]
-        },
-        options: {
-            responsive: true
-        }
+      type: 'line',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr'], // Labels for each month
+        datasets: [{
+          label: 'Active User Accounts',
+          data: [${activeUsersJan}, ${activeUsersFeb}, ${activeUsersMar}, ${activeUsersApr}], // Dynamic data from the controller
+          borderColor: 'green',
+          backgroundColor: 'rgba(0, 128, 0, 0.1)',
+          fill: true
+        }]
+      },
+      options: {
+        responsive: true
+      }
+    });
+
+    // User Stats Chart (active users per month)
+    const userStatsCtx = document.getElementById('userStatsChart').getContext('2d');
+    new Chart(userStatsCtx, {
+      type: 'line',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr'], // Labels representing months
+        datasets: [{
+          label: 'Active Users',
+          data: [${activeUsersJan}, ${activeUsersFeb}, ${activeUsersMar}, ${activeUsersApr}], // Dynamic data passed from backend
+          borderColor: 'rgba(0, 123, 255, 1)',
+          backgroundColor: 'rgba(0, 123, 255, 0.1)', // Semi-transparent background
+          fill: true
+        }]
+      },
+      options: {
+        responsive: true
+      }
     });
 </script>
 

@@ -1,13 +1,12 @@
 package com.example.pawpalsysAdmin.SysAdmin;
-import com.example.pawpalsysAdmin.Stats.stats;
-import com.example.pawpalsysAdmin.Stats.statsRepository;
+
 import com.example.pawpalsysAdmin.user.User;
 import com.example.pawpalsysAdmin.user.UserRepository;
 import com.example.pawpalsysAdmin.petService.PetService;
 import com.example.pawpalsysAdmin.petService.PetServiceRepository;
 import com.example.pawpalsysAdmin.review.Review;
 import com.example.pawpalsysAdmin.review.ReviewRepository;
-import com.example.pawpalsysAdmin.Stats.statsService;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,9 +25,14 @@ public class sysAdminController {
 
     @Autowired
     private ReviewRepository reviewRepository;
-    @Autowired
-    private statsService statsService;
 
+
+    @Autowired
+    public sysAdminController(UserRepository userRepository, PetServiceRepository petServiceRepository, ReviewRepository reviewRepository) {
+        this.userRepository = userRepository;
+        this.petServiceRepository = petServiceRepository;
+        this.reviewRepository = reviewRepository;
+    }
     // Dashboard
     /*
     http://localhost:8081/admin/dashboard
@@ -97,13 +101,27 @@ public class sysAdminController {
         userRepository.deleteById(id);
         return "redirect:/admin/users";
     }
-    @GetMapping("/stats")
-    public String showUsageStats(Model model) {
-        stats stats = statsService.getCurrentStats(); // Fetch the most recent stats
-        model.addAttribute("stats", stats);
-        return "usageStats"; // Ensure you have a Thymeleaf template named usageStats.html
-    }
 
+    @GetMapping("/stats")
+    public String viewStats(Model model) {
+        // Query for active users per month (adjust this to your actual data retrieval method)
+        int activeUsersJan = userRepository.countByActiveAndMonth(1); // For January
+        int activeUsersFeb = userRepository.countByActiveAndMonth(2); // For February
+        int activeUsersMar = userRepository.countByActiveAndMonth(3); // For March
+        int activeUsersApr = userRepository.countByActiveAndMonth(4); // For April
+
+        // Add the data to the model to be used in the frontend
+        model.addAttribute("activeUsersJan", activeUsersJan);
+        model.addAttribute("activeUsersFeb", activeUsersFeb);
+        model.addAttribute("activeUsersMar", activeUsersMar);
+        model.addAttribute("activeUsersApr", activeUsersApr);
+
+        // You can also add overall average rating if applicable
+        double overallAvg = reviewRepository.getAverageRating(); // Assuming you have such a method
+        model.addAttribute("overallAvg", overallAvg);
+
+        return "moderate-stats"; // This should correspond to your `stats.ftlh` template
+    }
 
 }
 
