@@ -36,8 +36,16 @@ public class sysAdminController {
         model.addAttribute("services", petServiceRepository.findAll());
         return "moderate-services";
     }
+    @RequestMapping("/services")
+    public String getServices(Model model) {
+        // Get pending services and flagged services
+        model.addAttribute("services", petServiceRepository.findByStatus("PENDING"));
+        model.addAttribute("flaggedServices", petServiceRepository.findByFlaggedTrue());
+        return "moderate-services";  // Points to the HTML page you provided
+    }
 
-    // List unapproved services
+
+        // List unapproved services
     @GetMapping("/services/pending")
     public String pendingServices(Model model) {
         List<PetService> pending = petServiceRepository.findByApproved(false);
@@ -56,14 +64,14 @@ public class sysAdminController {
             service.setApproved(true);
             petServiceRepository.save(service);
         }
-        return "redirect:/admin/services/pending";
+        return "redirect:/admin/services";
     }
 
     // Delete service
     @PostMapping("/services/delete/{id}")
     public String deleteService(@PathVariable Long id) {
         petServiceRepository.deleteById(id);
-        return "redirect:/admin/services/pending";
+        return "redirect:/admin/services";
     }
 
     // List flagged reviews

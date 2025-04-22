@@ -33,6 +33,7 @@
             </tr>
             </thead>
             <tbody>
+            <#if users?? && (users?size > 0)>
             <#list users as user>
             <tr>
                 <td>${user.firstName} ${user.lastName}</td>
@@ -47,6 +48,7 @@
             </#list>
             </tbody>
         </table>
+        <#/if>
     </div>
 </div>
 
