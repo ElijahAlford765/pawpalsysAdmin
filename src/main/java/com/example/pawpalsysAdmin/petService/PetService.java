@@ -18,15 +18,21 @@ public class PetService {
 
     private boolean approved;
 
+    private String status;
+    private boolean flagged;
+
+
     public PetService() {
     }
 
-    public PetService(int providerId, String description, float price, String availability, boolean approved) {
+    public PetService(int providerId, String description, float price, String availability, boolean approved, String status, Boolean flagged) {
         this.providerId = providerId;
         this.description = description;
         this.price = price;
         this.availability = availability;
 
+        this.flagged = flagged;
+        this.status = status;
         this.approved = approved;
     }
 
@@ -38,9 +44,21 @@ public class PetService {
         this.approved = approved;
     }
 
+    public boolean isFlagged() {
+        return flagged;
+    }
 
+    public void setFlagged(boolean flagged) {
+        this.flagged = flagged;
+    }
 
+    public String getStatus() {
+        return status;
+    }
 
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public int getServiceId() {
         return serviceId;

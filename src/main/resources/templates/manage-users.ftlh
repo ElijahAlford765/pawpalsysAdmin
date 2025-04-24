@@ -11,20 +11,16 @@
 
 <!-- Navigation -->
 <div class="container text-center mt-4">
-    <div class="row">
-        <div class="col">
-            <a href="/admin/dashboard" class="btn btn-primary">Go to Dashboard</a>
-        </div>
-    </div>
+    <a href="/admin/dashboard" class="btn btn-primary">Go to Dashboard</a>
 </div>
 
 <!-- Manage Users Section -->
 <div class="container mt-5">
     <h3 class="text-center">Active Users</h3>
 
-    <h5 class="text-center">Accounts</h5>
+    <h5 class="text-center mb-4">Accounts</h5>
     <div class="table-responsive">
-        <table class="table table-bordered table-hover text-center">
+        <table class="table table-bordered table-hover text-center align-middle">
             <thead class="table-dark">
             <tr>
                 <th>Name</th>
@@ -33,22 +29,25 @@
             </tr>
             </thead>
             <tbody>
-            <#if users?? && (users?size > 0)>
+            <#if users?? && users?size > 0>
             <#list users as user>
             <tr>
                 <td>${user.firstName} ${user.lastName}</td>
                 <td>${user.role}</td>
                 <td>
-                    <form action="/admin/deleteUser" method="post">
-                        <input type="hidden" name="userId" value="${user.userId}">
-                        <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+                    <form action="/admin/users/delete/${user.userId}" method="post">
+                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                     </form>
                 </td>
             </tr>
             </#list>
-            </tbody>
+            <#else>
+            <tr>
+                <td colspan="3">No users found.</td>
+            </tr>
+        </#if>
+        </tbody>
         </table>
-        <#/if>
     </div>
 </div>
 

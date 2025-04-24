@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,7 +46,6 @@
 </div>
 </#if>
 
-<!-- Chart: Active Users Overview -->
 <#if activeUsersJan?? && activeUsersFeb?? && activeUsersMar?? && activeUsersApr??>
 <div class="card mt-4 p-3 shadow-sm">
     <h6>Active User Accounts - Monthly Overview</h6>
@@ -64,41 +62,45 @@
 </div>
 
 <script>
-    const ctx = document.getElementById('activeUserChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr'],
-            datasets: [{
-                label: 'Active User Accounts',
-                data: [${activeUsersJan}, ${activeUsersFeb}, ${activeUsersMar}, ${activeUsersApr}],
-                borderColor: 'green',
-                backgroundColor: 'rgba(0, 128, 0, 0.1)',
-                fill: true
-            }]
-        },
-        options: {
-            responsive: true
-        }
-    });
+    const ctx = document.getElementById('activeUserChart')?.getContext('2d');
+    if (ctx) {
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr'],
+                datasets: [{
+                    label: 'Active User Accounts',
+                    data: [${activeUsersJan}, ${activeUsersFeb}, ${activeUsersMar}, ${activeUsersApr}],
+                    borderColor: 'green',
+                    backgroundColor: 'rgba(0, 128, 0, 0.1)',
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+    }
 
-    const userStatsCtx = document.getElementById('userStatsChart').getContext('2d');
-    new Chart(userStatsCtx, {
-        type: 'line',
-        data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr'],
-            datasets: [{
-                label: 'Active Users',
-                data: [${activeUsersJan}, ${activeUsersFeb}, ${activeUsersMar}, ${activeUsersApr}],
-                borderColor: 'rgba(0, 123, 255, 1)',
-                backgroundColor: 'rgba(0, 123, 255, 0.1)',
-                fill: true
-            }]
-        },
-        options: {
-            responsive: true
-        }
-    });
+    const userStatsCtx = document.getElementById('userStatsChart')?.getContext('2d');
+    if (userStatsCtx) {
+        new Chart(userStatsCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr'],
+                datasets: [{
+                    label: 'Active Users',
+                    data: [${activeUsersJan}, ${activeUsersFeb}, ${activeUsersMar}, ${activeUsersApr}],
+                    borderColor: 'rgba(0, 123, 255, 1)',
+                    backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+    }
 </script>
 
 </body>

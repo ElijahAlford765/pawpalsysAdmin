@@ -1,10 +1,10 @@
 package com.example.pawpalsysAdmin.SysAdmin;
 
-import com.example.pawpalsysAdmin.user.User;
+import com.example.pawpalsysAdmin.stats.stats;
+import com.example.pawpalsysAdmin.stats.statsService;
 import com.example.pawpalsysAdmin.user.UserRepository;
 import com.example.pawpalsysAdmin.petService.PetService;
 import com.example.pawpalsysAdmin.petService.PetServiceRepository;
-import com.example.pawpalsysAdmin.review.Review;
 import com.example.pawpalsysAdmin.review.ReviewRepository;
 
 
@@ -26,6 +26,9 @@ public class sysAdminController {
     @Autowired
     private ReviewRepository reviewRepository;
 
+    @Autowired
+    private statsService StatsService;
+
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
         return "dashboard";
@@ -34,6 +37,8 @@ public class sysAdminController {
     @GetMapping("/moderate-services")
     public String moderateServices(Model model) {
         model.addAttribute("services", petServiceRepository.findAll());
+        model.addAttribute("pendingServices", petServiceRepository.findByStatus("PENDING"));
+        model.addAttribute("flaggedServices", petServiceRepository.findByFlaggedTrue());
         return "moderate-services";
     }
     @RequestMapping("/services")
@@ -62,24 +67,24 @@ public class sysAdminController {
         PetService service = petServiceRepository.findById(id).orElse(null);
         if (service != null) {
             service.setApproved(true);
+            service.setStatus("APPROVED");
             petServiceRepository.save(service);
         }
-        return "redirect:/admin/services";
+        return "redirect:/admin/moderate-services";
     }
 
     // Delete service
     @PostMapping("/services/delete/{id}")
     public String deleteService(@PathVariable Long id) {
         petServiceRepository.deleteById(id);
-        return "redirect:/admin/services";
+        return "redirect:/admin/moderate-services";
     }
 
     // List flagged reviews
     @GetMapping("/reviews/flagged")
     public String flaggedReviews(Model model) {
-        List<Review> flagged = reviewRepository.findByFlagged(true);
-        model.addAttribute("reviews", flagged);
-        return "moderate-services";
+        model.addAttribute("reviews", reviewRepository.findByFlagged(true));
+        return "flagged-reviews";
     }
 
     // Delete review
@@ -116,9 +121,14 @@ public class sysAdminController {
         model.addAttribute("activeUsersMar", activeUsersMar);
         model.addAttribute("activeUsersApr", activeUsersApr);
 
-        // Average rating (assuming the method exists)
         double overallAvg = reviewRepository.getAverageRating();
         model.addAttribute("overallAvg", overallAvg);
+
+        // Connect the stat list
+        List<stats> statsList = StatsService.getstats();
+        model.addAttribute("statsList", statsList);
+
+        model.addAttribute("title", "Usage Statistics");
 
         return "moderate-stats";
     }

@@ -5,17 +5,9 @@
     <title>Moderate Services & Users</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        .btn-approve {
-            background-color: #28a745;
-            color: white;
-        }
-        .btn-remove {
-            background-color: #dc3545;
-            color: white;
-        }
-        .bg-black {
-            background-color: #343a40;
-        }
+        .btn-approve { background-color: #28a745; color: white; }
+        .btn-remove { background-color: #dc3545; color: white; }
+        .bg-black { background-color: #343a40; }
     </style>
 </head>
 <body>
@@ -27,10 +19,12 @@
         <h2>Pending Services for Approval</h2>
         <table class="table table-bordered">
             <thead class="thead-dark">
-            <tr><th>ID</th><th>Title</th><th>Description</th><th>Provider</th><th>Actions</th></tr>
+            <tr>
+                <th>ID</th><th>Title</th><th>Description</th><th>Provider</th><th>Actions</th>
+            </tr>
             </thead>
             <tbody>
-            <#if services?? && (services?size > 0)>
+            <#if services?? && services?size gt 0>
             <#list services as service>
             <tr>
                 <td>${service.id}</td>
@@ -62,7 +56,7 @@
             </div>
             <div class="card-body">
                 <ul class="list-group">
-                    <#if flaggedServices?? && (flaggedServices?size > 0)>
+                    <#if flaggedServices?? && flaggedServices?size gt 0>
                     <#list flaggedServices as service>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         ${service.name} - Reported by ${service.reportCount} users
@@ -81,7 +75,6 @@
             </#if>
             </ul>
         </div>
-
 </div>
 </section>
 
@@ -95,7 +88,7 @@
         </tr>
         </thead>
         <tbody>
-        <#if users?? && (users?size > 0)>
+        <#if users?? && users?size gt 0>
         <#list users as user>
         <tr>
             <td>${user.userId}</td>
