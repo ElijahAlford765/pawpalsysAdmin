@@ -37,7 +37,7 @@
 <!-- Navigation Bar -->
 <nav class="navbar navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="/admin/dashboard">Admin Dashboard</a>
+        <a class="navbar-brand" href="/stats/dashboard">Admin Dashboard</a>
     </div>
 </nav>
 
@@ -70,7 +70,7 @@
     <!-- Approve Modal -->
     <div class="modal fade" id="approveModal${app.applicationId}" tabindex="-1" aria-labelledby="approveModalLabel${app.applicationId}" aria-hidden="true">
         <div class="modal-dialog">
-            <form method="post" action="/admin/applications/approve/${app.applicationId}" class="modal-content">
+            <form method="post" action="/stats/applications/approve/${app.applicationId}" class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="approveModalLabel${app.applicationId}">Approve Application</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -89,7 +89,7 @@
     <!-- Deny Modal -->
     <div class="modal fade" id="denyModal${app.applicationId}" tabindex="-1" aria-labelledby="denyModalLabel${app.applicationId}" aria-hidden="true">
         <div class="modal-dialog">
-            <form method="post" action="/admin/applications/deny/${app.applicationId}" class="modal-content">
+            <form method="post" action="/stats/applications/deny/${app.applicationId}" class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="denyModalLabel${app.applicationId}">Deny Application</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

@@ -13,6 +13,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     // Find users by status (e.g., "Active", "Inactive", "Banned")
     List<User> findByStatus(String status);
 
+
+
     // Find users who are admins or not
     List<User> findByIsAdmin(boolean isAdmin);
 
@@ -30,6 +32,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     // Find all users with a specific combination of status and role
     List<User> findByStatusAndRole(String status, String role);
+
+    long countByStatus(String status);
 
     @Query("SELECT COUNT(u) FROM User u WHERE u.active = true AND MONTH(u.createdAt) = :month")
     int countByActiveAndMonth(@Param("month") int month);

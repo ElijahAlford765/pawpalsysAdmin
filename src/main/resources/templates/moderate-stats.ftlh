@@ -12,7 +12,7 @@
     <div class="row mb-3">
         <div class="col d-flex justify-content-between align-items-center">
             <h2>Statistics</h2>
-            <a href="/admin/dashboard" class="btn btn-primary">Back to Dashboard</a>
+            <a href="/stats/dashboard" class="btn btn-primary">Back to Dashboard</a>
         </div>
     </div>
 
@@ -48,13 +48,13 @@
 
 <#if activeUsersJan?? && activeUsersFeb?? && activeUsersMar?? && activeUsersApr??>
 <div class="card mt-4 p-3 shadow-sm">
-    <h6>Active User Accounts - Monthly Overview</h6>
+    <h6 class="mb-3">Active User Accounts - Monthly Overview</h6>
     <canvas id="activeUserChart" width="400" height="150"></canvas>
 </div>
 
 <div class="row mt-4">
     <div class="col-md-6">
-        <h6>Active Users Per Month</h6>
+        <h6>Monthly Active Users</h6>
         <canvas id="userStatsChart" width="400" height="150"></canvas>
     </div>
 </div>
@@ -105,3 +105,4 @@
 
 </body>
 </html>
+

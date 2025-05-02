@@ -20,10 +20,11 @@ public class Review {
     // Flag for reported reviews
     @Column(nullable = false)
     private boolean flagged;
+    private boolean hidden;
 
     public Review() {}
 
-    public Review(int customerId, int providerId, int serviceId, int rating, String description, Date createdAt, boolean flagged) {
+    public Review(boolean hidden,int customerId, int providerId, int serviceId, int rating, String description, Date createdAt, boolean flagged) {
         this.customerId = customerId;
         this.providerId = providerId;
         this.serviceId = serviceId;
@@ -33,6 +34,16 @@ public class Review {
         this.reply = "";
         this.reported = false;
         this.flagged = flagged;
+
+        this.hidden = hidden;
+    }
+
+    public boolean isHidden() {
+        return hidden;
+    }
+
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
     }
 
     public boolean isFlagged() {
