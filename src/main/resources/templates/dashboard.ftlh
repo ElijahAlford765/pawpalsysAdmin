@@ -51,16 +51,16 @@
     <nav class="sidebar d-flex flex-column align-items-center p-3">
         <ul class="nav flex-column w-100 text-center">
             <li class="nav-item mb-2">
-                <a class="nav-link" href="/stats/moderate-services">Moderate Services</a>
+                <a class="nav-link" href="/stats/admin-moderation">Moderate Services</a>
             </li>
             <li class="nav-item mb-2">
-                <a class="nav-link" href="/stats/services">Moderate Reviews</a>
+                <a class="nav-link" href="/stats/reviews">Moderate Reviews</a>
             </li>
             <li class="nav-item mb-2">
-                <a class="nav-link" href="/stats/manage-users">Manage Users</a>
+                <a class="nav-link" href="/stats/users">Manage Users</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/stats/moderate-stats">Statistics</a>
+                <a class="nav-link" href="/stats/view">Statistics</a>
             </li>
         </ul>
     </nav>

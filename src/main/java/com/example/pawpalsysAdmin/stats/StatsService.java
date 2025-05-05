@@ -17,7 +17,7 @@ import java.util.Optional;
 
 @Service
 public class StatsService {
-    private final statsRepository statsRepository;
+    private final StatsRepository statsRepository;
     private final UserService userService;
     private final PetServiceService serviceService;
     //private final CustomerService customerService;
@@ -25,7 +25,7 @@ public class StatsService {
     private final ReviewService reviewService;
 
     @Autowired
-    public StatsService(statsRepository statsRepository,
+    public StatsService(StatsRepository statsRepository,
                         PetServiceService serviceService, ReviewService reviewService, PetServiceService serviceService1,UserService userService,ProviderService providerService) {
         this.statsRepository = statsRepository;
         this.userService = userService;
@@ -37,16 +37,16 @@ public class StatsService {
         this.serviceService = serviceService1;
     }
 
-    public List<stats> getAllStatistics() {
+    public List<Stats> getAllStatistics() {
         return statsRepository.findAll();
     }
 
-    public stats getStatisticsById(int id) {
+    public Stats getStatisticsById(int id) {
         return statsRepository.findById(id).orElse(null);
     }
 
-    public stats generateLiveStats() {
-        stats stats = new stats();
+    public Stats generateLiveStats() {
+        Stats stats = new Stats();
         stats.setDate(LocalDate.now());
         stats.setLastUpdated(LocalTime.now());
         stats.setTotalUsers(userService.getAllUsers().size());
@@ -71,7 +71,7 @@ public class StatsService {
     }
 
 
-    public void addNewStatistics(stats statistics) {
+    public void addNewStatistics(Stats statistics) {
         statsRepository.save(statistics);
     }
 
@@ -79,7 +79,7 @@ public class StatsService {
         statsRepository.deleteById(id);
     }
 
-    public Optional<stats> getStatisticsByProvider(int providerId) {
+    public Optional<Stats> getStatisticsByProvider(int providerId) {
         return statsRepository.findByProviderId(providerId);
     }
 }

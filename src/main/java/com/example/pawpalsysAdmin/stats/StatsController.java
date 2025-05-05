@@ -25,8 +25,8 @@ public class StatsController {
 
     private final UserRepository userRepository;
     private final PetServiceRepository petServiceRepository;
-    private final statsRepository statsRepository;
-    private final statsService statsService;
+    private final StatsRepository statsRepository;
+    private final StatsService statsService;
     private final ReviewService reviewService;
     private final PetServiceService petServiceService;
     private final ProviderRepository providerRepository;
@@ -36,8 +36,8 @@ public class StatsController {
     @Autowired
     public StatsController(UserRepository userRepository,
                            PetServiceRepository petServiceRepository,
-                           statsRepository statsRepository,
-                           statsService statsService,
+                           StatsRepository statsRepository,
+                           StatsService statsService,
                            ReviewService reviewService,
                            PetServiceService petServiceService,
                            ProviderRepository providerRepository,
