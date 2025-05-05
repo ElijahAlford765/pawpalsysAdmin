@@ -1,9 +1,5 @@
 package com.example.pawpalsysAdmin.stats;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -13,6 +9,7 @@ import java.time.LocalTime;
 @Entity
 @Table(name = "stats")
 public class Stats {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -43,7 +40,6 @@ public class Stats {
     @Column(nullable = false)
     private double avgRating;
 
-
     public Stats() {
     }
 
@@ -69,9 +65,6 @@ public class Stats {
         this.avgRating = avgRating;
         this.providerId = providerId;
     }
-
-
-
     public int getProviderId(){
         return providerId;
     }

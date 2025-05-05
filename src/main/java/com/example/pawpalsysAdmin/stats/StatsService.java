@@ -1,10 +1,12 @@
 package com.example.pawpalsysAdmin.stats;
 
+import com.example.pawpalsysAdmin.provider.ProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.pawpalsysAdmin.customer.CustomerService;
-import com.example.pawpalsysAdmin.provider.ProviderService;
+//import com.example.stats.customer.CustomerService;
+//import com.example.stats.provider.ProviderService;
 import com.example.pawpalsysAdmin.user.UserService;
+import com.example.pawpalsysAdmin.user.UserRepository;
 import com.example.pawpalsysAdmin.review.ReviewService;
 import com.example.pawpalsysAdmin.petService.PetServiceService;
 
@@ -15,40 +17,41 @@ import java.util.Optional;
 
 @Service
 public class StatsService {
-
-    private final StatsRepository statsRepository;
+    private final statsRepository statsRepository;
     private final UserService userService;
     private final PetServiceService serviceService;
-    private final CustomerService customerService;
+    //private final CustomerService customerService;
     private final ProviderService providerService;
     private final ReviewService reviewService;
 
     @Autowired
-    public StatsService(StatsRepository statsRepository, UserService userService,
-                        PetServiceService serviceService, ReviewService reviewService, CustomerService customerService, ProviderService providerService ) {
+    public StatsService(statsRepository statsRepository,
+                        PetServiceService serviceService, ReviewService reviewService, PetServiceService serviceService1,UserService userService,ProviderService providerService) {
         this.statsRepository = statsRepository;
         this.userService = userService;
-        this.serviceService = serviceService;
+        // this.serviceService = serviceService;
         this.reviewService = reviewService;
-        this.customerService = customerService;
+        // this.customerService = customerService;
+        // CustomerService customerService
         this.providerService = providerService;
+        this.serviceService = serviceService1;
     }
 
-    public List<Stats> getAllStatistics() {
+    public List<stats> getAllStatistics() {
         return statsRepository.findAll();
     }
 
-    public Stats getStatisticsById(int id) {
+    public stats getStatisticsById(int id) {
         return statsRepository.findById(id).orElse(null);
     }
 
-    public Stats generateLiveStats() {
-        Stats stats = new Stats();
+    public stats generateLiveStats() {
+        stats stats = new stats();
         stats.setDate(LocalDate.now());
         stats.setLastUpdated(LocalTime.now());
         stats.setTotalUsers(userService.getAllUsers().size());
-        stats.setTotalCustomers(customerService.getAllCustomers().size());
-        stats.setTotalServiceProviders(providerService.getAllProviders().size());
+        //stats.setTotalCustomers(CustomerService.getAllCustomers().size());
+        //stats.setTotalServiceProviders(providerService.getAllProviders().size());
         stats.setPendingProviderApplications((int) userService.countByStatus("PENDING"));
         stats.setApprovedProviderApplications((int) userService.countByStatus("APPROVED"));
         stats.setDeniedProviderApplications((int) userService.countByStatus("DENIED"));
@@ -68,7 +71,7 @@ public class StatsService {
     }
 
 
-    public void addNewStatistics(Stats statistics) {
+    public void addNewStatistics(stats statistics) {
         statsRepository.save(statistics);
     }
 
@@ -76,8 +79,7 @@ public class StatsService {
         statsRepository.deleteById(id);
     }
 
-    public Optional<Stats> getStatisticsByProvider(int providerId) {
+    public Optional<stats> getStatisticsByProvider(int providerId) {
         return statsRepository.findByProviderId(providerId);
     }
-
 }
