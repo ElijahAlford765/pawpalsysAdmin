@@ -34,7 +34,7 @@ public class StatsController {
         this.statsService = statsService;
     }
 
-    // ====== RESTful Stats APIs ======
+
 
     @GetMapping
     public List<Stats> getAllStatistics(Model model) {
@@ -46,10 +46,7 @@ public class StatsController {
         return statsService.generateLiveStats();
     }
 
-    @PostMapping("/snapshot")
-    public void saveStatsSnapshot(Model model) {
-        statsService.saveCurrentStatsSnapshot();
-    }
+
 
     @DeleteMapping("/{id}")
     public void deleteStatisticsById(@PathVariable int id) {
@@ -68,6 +65,7 @@ public class StatsController {
         model.addAttribute("services", petServiceRepository.findAll());
         model.addAttribute("pendingServices", petServiceRepository.findByStatus("PENDING"));
         model.addAttribute("flaggedServices", petServiceRepository.findByFlaggedTrue());
+        model.addAttribute("users", userRepository.findAll());
         return "moderate-services";
     }
 
@@ -86,6 +84,7 @@ public class StatsController {
         petServiceRepository.deleteById(id);
         return "redirect:/stats/moderate-services";
     }
+
 
     @GetMapping("/reviews/flagged")
     public String flaggedReviews(Model model) {

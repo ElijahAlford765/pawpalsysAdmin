@@ -79,4 +79,5 @@ public class StatsService {
     public Optional<Stats> getStatisticsByProvider(int providerId) {
         return statsRepository.findByProviderId(providerId);
     }
+
 }
